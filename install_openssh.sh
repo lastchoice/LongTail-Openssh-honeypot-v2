@@ -36,11 +36,14 @@ mkdir openssh-2222
 ######################################################
 cd openssh-22
 wget http://mirrors.nycbug.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz
-tar -xf openssh-6.7p1.tar.gz
-mv openssh-6.7p1 openssh-6.7p1-22
-cd openssh-6.7p1-22
+tar -xf openssh-7.2p1.tar.gz
+mv openssh-7.2p1 openssh-7.2p1-22
+
+cd openssh-7.2p1-22
+
 mv auth-passwd.c auth-passwd.c.orig
 mv sshd.c sshd.c.orig
+mv auth2-pubkey.c auth2-pubkey.c.orig
 wget https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/auth-passwd.c
 wget https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/sshd.c
 wget https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/auth2-pubkey.c
@@ -56,16 +59,24 @@ cd ..
 ######################################################
 cd /usr/local/source/openssh
 cd openssh-2222
-wget http://mirrors.nycbug.org/pub/OpenBSD/OpenSSH/portable/openssh-6.7p1.tar.gz
-tar -xf openssh-6.7p1.tar.gz
-mv openssh-6.7p1 openssh-6.7p1-2222
-cd openssh-6.7p1-2222
-wget https://raw.githubusercontent.com/wedaa/LongTail-Log-Analysis/master/auth-passwd-2222.c
-mv sshd.c sshd.c.orig
+wget http://mirrors.nycbug.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz
+tar -xf openssh-7.2p1.tar.gz
+mv openssh-7.2p1 openssh-7.2p1-2222
+
+cd openssh-7.2p1-2222
+
 mv auth-passwd.c auth-passwd.c.orig
-wget https://raw.githubusercontent.com/wedaa/LongTail-Log-Analysis/master/sshd.c
+mv sshd.c sshd.c.orig
+mv auth2-pubkey.c auth2-pubkey.c.orig
+
+wget https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/auth-passwd-2222.c
+wget https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/sshd.c
+wget https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/auth2-pubkey-2222.c
+wget https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/sshd_config-2222
+
 cp auth-passwd-2222.c auth-passwd.c
-wget https://raw.githubusercontent.com/wedaa/LongTail-Log-Analysis/master/sshd_config-2222
+cp auth2-pubkey-2222.c auth2-pubkey.c
+
 cp sshd_config-2222 /usr/local/etc
 ./configure
 make
