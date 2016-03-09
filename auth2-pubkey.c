@@ -85,9 +85,10 @@ userauth_pubkey(Authctxt *authctxt)
 	int have_sig, pktype;
 	int authenticated = 0;
 
+//      John Walsh:  Remove return for invalid user so the Honey pot can log the attacker's key 
 	if (!authctxt->valid) {
 		debug2("%s: disabled because of invalid user", __func__);
-		return 0;
+//		return 0;
 	}
 	have_sig = packet_get_char();
 	if (datafellows & SSH_BUG_PKAUTH) {
@@ -129,8 +130,6 @@ userauth_pubkey(Authctxt *authctxt)
 	fp = sshkey_fingerprint(key, options.fingerprint_hash, SSH_FP_DEFAULT);
 	//Added by John Walsh
 	logit("KeyLog: Username %s Key: %s", authctxt->user, fp);
-	logit("IP: %s KeyLog: Username: %s Key: %s", get_remote_ipaddr(), authctxt->user, fp);
-
 	if (auth2_userkey_already_used(authctxt, key)) {
 		logit("refusing previously-used %s key", key_type(key));
 		goto done;
